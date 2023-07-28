@@ -2,15 +2,71 @@
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" integrity="sha512-t4GWSVZO1eC8BM339Xd7Uphw5s17a86tIZIj8qRxhnKub6WoyhnrxeCIMeAqBPgdZGlCcG2PrZjMc+Wr78+5Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <title>Document</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
 
+<style>
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      
+      .header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 20px;
+        text-align: center;
+      }
+      
+      .header h1 {
+        font-size: 36px;
+      }
+      
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      th, td {
+        text-align: left;
+        padding: 8px;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      
+      th {
+        background-color: #4CAF50;
+        color: white;
+      }
+      
+      .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #006400;
+        color: white;
+        text-align: center;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+      }
+      
+
+</style>
+
+
+<div class="header">
+  <h1>LISTADO DE PAÍSES</h1>
+</div>
+
 {% if user %}
- <h1> Bienveniod de vuelta, {{ user }}</h1>
+ <h1 align="center"> Bienvenido de vuelta, {{ user }}</h1>
 {% else %}
-<h1> Hola invitado</h1>
+<h1 align="center"> Hola invitado</h1>
 {% endif %}
-<h2>Listado de paises de la región:</h2>
+<h2 align="center">Listado de paises de la región:</h2>
 <table class="table table-hover">
   
     <thead>
@@ -18,33 +74,47 @@
 
         <th>Nombre continente</th>
         <th>País</th>
+        <th>Capital</th>
+        <th>Moneda</th>
+        <th>Población</th>
+        <th>Superficie</th>
     
 </thead>
 
 <tbody>
-
     {% for continente in continentes %}
-    <tr>
         {% for info in continente %}
-            {%  if  info.nombre == "América" %}
-                        <td rowspan="{{ contador_paises_america }}" >
-            {%  elif  info.nombre == "Europa" %}
-                        <td rowspan="{{ contador_paises_europa }}" >
-            {%  elif  info.nombre == "Asia" %}    
-                        <td rowspan="{{ contador_paises_asia }}" >    
-            {%  endif %}  
-                        {{  info.nombre  }}      
-                        </td>    
-                        {% for pais in info.paises  %}
-                            <td>  {{ pais }}  </td>
-                        </tr>
-
-                       {% endfor %}                
+            {% for i in range(info.paises|length) %}
+                <tr>
+                    {% if i == 0 %}
+                        {% if info.nombre == "América" %}
+                            <td rowspan="{{ contador_paises_america }}">{{ info.nombre }}</td>
+                        {% elif info.nombre == "Europa" %}
+                            <td rowspan="{{ contador_paises_europa }}">{{ info.nombre }}</td>
+                        {% elif info.nombre == "Asia" %}
+                            <td rowspan="{{ contador_paises_asia }}">{{ info.nombre }}</td>
+                        {% endif %}
+                    {% endif %}
+                    <td>{{ info.paises[i] }}</td>
+                    <td>{{ info.capital[i] }}</td>
+                    <td>{{ info.moneda[i] }}</td>
+                    <td>{{ info.población[i] }}</td>
+                    <td>{{ info.superficie[i] }}</td>
+                </tr>
+            {% endfor %}
         {% endfor %}
-    </tr>    
     {% endfor %}
- </tbody>
+</tbody>
+
 </table>
 
 </body>
+
+<footer class="footer">
+    <br>
+    <p>ADSO</p>
+    <p>HERRERA DIAZ DEIVI STIVEN</p>
+    <p>2023</p>
+  </footer>
+
 </html>
